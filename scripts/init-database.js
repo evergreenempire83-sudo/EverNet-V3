@@ -293,4 +293,25 @@ async function initializeDatabase() {
     
     console.log('🚀 Next Steps:');
     console.log('1. Run: npm run init-db');
-    console.log('2. Create Firebase
+    console.log('2. Create Firebase Authentication user');
+    console.log('3. Run: npm run dev');
+    console.log('4. Login with admin credentials\n');
+
+  } catch (error) {
+    console.error('❌ Database initialization failed:', error);
+    process.exit(1);
+  } finally {
+    rl.close();
+  }
+}
+
+// Get admin password securely
+rl.question('Enter admin password (min 6 chars): ', (password) => {
+  if (password.length < 6) {
+    console.error('❌ Password must be at least 6 characters');
+    process.exit(1);
+  }
+  
+  ADMIN_PASSWORD = password;
+  initializeDatabase();
+});
