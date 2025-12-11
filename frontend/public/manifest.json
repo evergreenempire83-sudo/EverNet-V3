@@ -1,0 +1,38 @@
+{
+  "short_name": "Evernet Music",
+  "name": "Evernet Music Creator Platform",
+  "description": "New Generation Monetization Platform",
+  "icons": [
+    {
+      "src": "/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/creator/dashboard",
+  "background_color": "#0A2463",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0A2463",
+  "orientation": "portrait-primary",
+  "categories": ["business", "finance", "music"],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your earnings dashboard",
+      "url": "/creator/dashboard"
+    },
+    {
+      "name": "Request Withdrawal",
+      "short_name": "Withdraw",
+      "description": "Request a withdrawal",
+      "url": "/creator/withdrawals?action=request"
+    }
+  ]
+}
