@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ADMIN ONLY ACCESS
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+    
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function isCreator() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "creator";
+    }
+    
+    // USERS COLLECTION
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      
+      // Creators can only update their profile info
+      match /{document=**} {
+        allow update: if isOwner(userId) && 
+          request.resource.data.keys().hasOnly(['displayName', 'paymentMethod']);
+      }
+    }
+    
+    // MONTHLY REPORTS
+    match /monthly_reports/{reportId} {
+      allow read: if isOwner(resource.data.creatorId) || isAdmin();
+      allow write: if isAdmin();
+    }
+    
+    // WITHDRAWAL REQUESTS
+    match /withdrawal_requests/{requestId} {
+      allow read: if isOwner(resource.data.creatorId) || isAdmin();
+      allow create: if isOwner(resource.data.creatorId);
+      allow update: if isAdmin();
+    }
+    
+    // CREATOR NOTIFICATIONS
+    match /creator_notifications/{docId} {
+      allow read: if isOwner(resource.data.creatorId);
+      allow update: if isOwner(resource.data.creatorId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead', 'isArchived', 'openedAt']);
+    }
+    
+    // SCANNED VIDEOS (Admin only)
+    match /scanned_videos/{videoId} {
+      allow read: if isAdmin() || 
+        (isCreator() && resource.data.creatorId == request.auth.uid);
+      allow write: if isAdmin();
+    }
+    
+    // ADMIN ONLY COLLECTIONS
+    match /audit_logs/{logId} {
+      allow read, write: if isAdmin();
+    }
+    
+    match /fraud_violations/{violationId} {
+      allow read, write: if isAdmin();
+    }
+    
+    match /platform_stats/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    match /settings/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    match /scan_logs/{logId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+  }
+}
