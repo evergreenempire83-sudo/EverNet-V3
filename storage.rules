@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Public images (logos, banners)
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && hasRole('admin');
+    }
+    
+    // User receipts
+    match /receipts/{userId}/{receiptId} {
+      allow read: if request.auth != null && 
+        (request.auth.uid == userId || hasRole('admin'));
+      allow write: if request.auth != null && 
+        request.auth.uid == userId;
+    }
+    
+    // User profile pictures
+    match /profile-pictures/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        request.auth.uid == userId;
+    }
+    
+    // Fraud evidence (admin only)
+    match /fraud-evidence/{violationId}/{file} {
+      allow read: if hasRole('admin');
+      allow write: if hasRole('admin');
+    }
+    
+    // Helper function
+    function hasRole(role) {
+      return request.auth.token.role == role;
+    }
+  }
+}
