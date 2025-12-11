@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "create-collections": "node scripts/create-missing-collections.js"
+  }
+}
