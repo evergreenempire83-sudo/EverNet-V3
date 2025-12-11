@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting to Evernet Music</title>
+    <link rel="canonical" href="/evernet-admin-system/"/>
+    <meta http-equiv="refresh" content="0; url=/evernet-admin-system/">
+    <script>
+        // Store the intended destination
+        sessionStorage.redirect = location.pathname;
+        location.replace("/evernet-admin-system/");
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A2463 0%, #1E3A8A 100%);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+        }
+        h1 {
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,215,0,0.3);
+            border-radius: 50%;
+            border-top-color: #FFD700;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Redirecting to Evernet Music...</h1>
+        <p>If you are not redirected automatically, <a href="/evernet-admin-system/" style="color: #FFD700;">click here</a>.</p>
+    </div>
+</body>
+</html>
