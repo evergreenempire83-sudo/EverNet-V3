@@ -9,6 +9,26 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import AdminLayout from './components/shared/Layout/AdminLayout'
 import CreatorLayout from './components/shared/Layout/CreatorLayout'
 
+// Add these imports
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ErrorBoundary from './components/shared/ErrorBoundary';
+import { queryClient } from './lib/react-query';
+
+// Wrap your app with these providers
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ErrorBoundary>
+        {/* Your existing router setup */}
+        <Router>
+          {/* Your routes */}
+        </Router>
+      </ErrorBoundary>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+}
 // Auth Pages
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
