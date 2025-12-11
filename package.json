@@ -1,0 +1,28 @@
+{
+  "name": "evernet-admin-system",
+  "version": "3.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend/functions"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:firestore": "firebase deploy --only firestore",
+    "emulate": "firebase emulators:start",
+    "init-db": "node scripts/init-database.js",
+    "seed": "node scripts/seed-sample-data.js",
+    "backup": "node scripts/backup-firestore.js",
+    "scanner": "node scripts/run-scanner.js"
+  },
+  "devDependencies": {
+    "firebase-tools": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
