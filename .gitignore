@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+*/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# Firebase
+.firebase/
+*.firebaserc
+
+# Build outputs
+dist/
+build/
+.out/
+.next/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Coverage
+coverage/
+.nyc_output
+
+# Testing
+jest-cache/
